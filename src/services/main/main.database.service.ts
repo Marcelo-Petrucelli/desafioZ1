@@ -1,11 +1,12 @@
 import { Injectable } from '@nestjs/common';
-import { ConfigService } from './main.config';
-import { Options, MySqlDriver, MikroORM } from '@mikro-orm/mysql';
+import { ConfigService } from './main.config.service';
+import { Options, MySqlDriver, MikroORM, EntityManager } from '@mikro-orm/mysql';
 import { TsMorphMetadataProvider } from '@mikro-orm/reflection';
 
 @Injectable()
 export class DBService {
   public orm!: MikroORM;
+  private em!: EntityManager;
 
   private readonly configService: ConfigService;
   private readonly dbOptions: Options;
@@ -36,5 +37,6 @@ export class DBService {
 
   public async connect(){
     this.orm = await MikroORM.init(this.dbOptions);
+    this.em = this.orm.em;
   }
 }

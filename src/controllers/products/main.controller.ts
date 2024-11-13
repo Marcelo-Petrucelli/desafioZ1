@@ -1,11 +1,33 @@
-import { Controller, Get } from '@nestjs/common';
+import { Controller, Get, Post, Req, UseGuards } from '@nestjs/common';
+import { Request } from 'express';
+import { User } from 'src/entities/user.entity';
+import { JwtAuthGuard } from 'src/guards/auth/auth.jwtAuth.guard';
+import { BasicAuthGuard } from 'src/guards/auth/auth.localAuth.guard';
+import { AuthService } from 'src/services/main/main.auth.service';
 
 @Controller()
 export class MainController {
-  //constructor(private readonly appService: TestService) {}
 
-  @Get()
-  getHello(): string {
-    return 'Hello World';
+  constructor(private authService: AuthService) {}
+
+  @UseGuards(BasicAuthGuard)
+  @Post('auth/login')
+  async login(@Req() req: Request) {
+    //TODO - Check if not already loggedIn, if so forward this request to another controller
+
+    //const token = this.authService.login(req.user as User);
+    return req.user as User;
   }
+
+  @UseGuards(JwtAuthGuard)
+  @Post('auth/logout')
+  async logout(@Req() req: Request) {
+    return req.logout(() => {});
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Get('profile')
+  getProfile(@Req() req: Request) {
+    return req.user;
+  }  
 }

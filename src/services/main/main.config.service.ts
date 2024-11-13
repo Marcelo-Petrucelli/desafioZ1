@@ -9,10 +9,11 @@ export interface ConfigProps {
   readonly DB_NAME: string;
 
   //private readonly HOST_ADDRESS: string;
-  readonly HOST_PORT?: number;
+  readonly HOST_PORT: number;
 
-  readonly JWT_KEYSTORE_QNT: number;
-  readonly JWT_KEY_SIZE: number;
+  //readonly JWT_KEYSTORE_QNT: number;
+  //readonly JWT_KEY_SIZE: number;
+  readonly JWT_KEY: string;
   readonly JWT_ISSUER: string;
   readonly JWT_AUDIENCE: string;
   readonly JWT_DURATION: number;
@@ -31,29 +32,28 @@ export class ConfigService {
   constructor(envOptions: DotEnv.DotenvConfigOptions = { path: '.env.dev' }, isDev: boolean = true) { //Defaults to DEV
     DotEnv.config(envOptions);
 
-    console.log(envOptions);
-    console.log(process.env.DB_HOST);
-    console.log(process.env.DB_PORT);
-    console.log(process.env.DB_USER);
-    console.log(process.env.DB_PW);
-    console.log(process.env.DB_NAME);
-
     this.devMode = isDev;
+    if(this.devMode){
+      console.log("Running on DEV mode/config.");
+    }
+
+    //TODO - Possibly add checks for each process.env variable and default values, like for HOST_PORT (5000?)
     this.props = {
-        DB_HOST: 			process.env.DB_HOST as string,
-        DB_PORT: 			parseInt(process.env.DB_PORT as string),
-        DB_USER: 			process.env.DB_USER as string,
-        DB_PW: 				process.env.DB_PW as string,
-        DB_NAME: 			process.env.DB_NAME as string,
+        DB_HOST: 			        process.env.DB_HOST as string,
+        DB_PORT: 			        parseInt(process.env.DB_PORT as string),
+        DB_USER: 			        process.env.DB_USER as string,
+        DB_PW: 				        process.env.DB_PW as string,
+        DB_NAME: 			        process.env.DB_NAME as string,
 
-        //HOST_ADRESS: 		process.env.HOST_ADRESS as string,
-        HOST_PORT: 			parseInt(process.env.HOST_PORT as string),
+        //HOST_ADRESS: 		    process.env.HOST_ADRESS as string,
+        HOST_PORT: 			      parseInt(process.env.HOST_PORT as string),
 
-        JWT_KEYSTORE_QNT: 	parseInt(process.env.JWT_KEYSTORE_QNT as string),
-        JWT_KEY_SIZE: 		parseInt(process.env.JWT_KEY_SIZE as string),
-        JWT_ISSUER: 		process.env.JWT_ISSUER as string,
-        JWT_AUDIENCE: 		process.env.JWT_AUDIENCE as string,
-        JWT_DURATION: 		parseInt(process.env.JWT_DURATION as string),
+        //JWT_KEYSTORE_QNT: 	parseInt(process.env.JWT_KEYSTORE_QNT as string),
+        //JWT_KEY_SIZE: 		  parseInt(process.env.JWT_KEY_SIZE as string),
+        JWT_KEY: 		          process.env.JWT_KEY as string,
+        JWT_ISSUER: 		      process.env.JWT_ISSUER as string,
+        JWT_AUDIENCE: 	      process.env.JWT_AUDIENCE as string,
+        JWT_DURATION: 	      parseInt(process.env.JWT_DURATION as string),
 
         //LOG_PATH:           process.env.LOG_PATH as string,
         

@@ -4,7 +4,7 @@ import { Cart } from './cart.entity';
 import { Session } from './session.entity';
 
 @Entity()
-export class User {
+export class User implements Express.User {
 
    @PrimaryKey()
    id!: number;
