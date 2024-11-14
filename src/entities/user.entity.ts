@@ -1,29 +1,33 @@
-import { Collection, Entity, OneToMany, OneToOne, PrimaryKey, Property } from '@mikro-orm/core';
-import { Address } from './address.entity';
-import { Cart } from './cart.entity';
-import { Session } from './session.entity';
+import { Collection, Entity, EntityRepositoryType, OneToMany, OneToOne, PrimaryKey, Property, Ref } from '@mikro-orm/core';
+import { UserRepository } from './user.repository';
+import { Address } from 'src/entities/address.entity';
+import { Session } from 'src/entities/session.entity';
+import { Cart } from 'src/entities/cart.entity';
 
-@Entity()
+@Entity({ repository: () => UserRepository })
 export class User implements Express.User {
 
-   @PrimaryKey()
-   id!: number;
+  [EntityRepositoryType]?: UserRepository;
 
-   @Property()
-   email!: string;
+  @PrimaryKey()
+  id!: number;
 
-   @Property()
-   password!: string;
+  @Property()
+  email!: string;
 
-   @Property()
-   fullName!: string;
+  @Property()
+  password!: string;
 
-   @OneToMany({ mappedBy: 'owner', lazy: true })
-   addresses = new Collection<Address>(this);
+  @Property()
+  fullName!: string;
 
-   @OneToOne()
-   cart!: Cart;
+  @OneToMany({ mappedBy: 'owner', lazy: true })
+  addresses = new Collection<Address>(this);
 
-   @OneToMany({ mappedBy: 'user', lazy: true })
-   session!: Session;
+  @OneToOne()
+  cart?: Ref<Cart>;
+
+  @OneToOne()
+  session?: Ref<Session>;
+
 }

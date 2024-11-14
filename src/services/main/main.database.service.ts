@@ -1,12 +1,15 @@
-import { Injectable } from '@nestjs/common';
-import { ConfigService } from './main.config.service';
-import { Options, MySqlDriver, MikroORM, EntityManager } from '@mikro-orm/mysql';
+import { BeforeApplicationShutdown, Injectable } from '@nestjs/common';
+import { Options, MySqlDriver, MikroORM, EntityManager, RequestContext } from '@mikro-orm/mysql';
 import { TsMorphMetadataProvider } from '@mikro-orm/reflection';
+import { Migrator } from '@mikro-orm/migrations';
+
+import { ConfigService } from './main.config.service';
+import { NextFunction } from 'express';
 
 @Injectable()
-export class DBService {
+export class DBService implements BeforeApplicationShutdown {
   public orm!: MikroORM;
-  private em!: EntityManager;
+  public em!: EntityManager;
 
   private readonly configService: ConfigService;
   private readonly dbOptions: Options;
@@ -26,6 +29,13 @@ export class DBService {
       entities: ['./dist/entities/*.entity.js'],
       entitiesTs: ['src/entities/*.entity.ts'],
 
+      extensions: [Migrator],
+      migrations: {
+        tableName: 'orm_migrations',
+        path: 'dist/migrations',
+        pathTs: 'src/migrations',
+      },
+
       // we will use the ts-morph reflection, an alternative to the default reflect-metadata provider
       // check the documentation for their differences: https://mikro-orm.io/docs/metadata-providers
       metadataProvider: TsMorphMetadataProvider,
@@ -38,5 +48,13 @@ export class DBService {
   public async connect(){
     this.orm = await MikroORM.init(this.dbOptions);
     this.em = this.orm.em;
+  }
+
+  public async createContext(req: Request, res: Response, next: NextFunction){
+    RequestContext.create(this.em, next);
+  }
+
+  beforeApplicationShutdown(signal: string) {
+    this.orm.close();
   }
 }

@@ -20,4 +20,4 @@ const databaseServiceProvider = {
   exports: [ databaseServiceProvider ]
 })
 
-export class DatabaseModule {}
+export class DatabaseModule {};

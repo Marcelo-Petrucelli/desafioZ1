@@ -1,30 +1,33 @@
-import { Entity, PrimaryKey, Property } from '@mikro-orm/core';
+import { Entity, EntityRepositoryType, PrimaryKey, Property } from '@mikro-orm/core';
+import { ProductRepository } from './product.repository';
 
-@Entity()
+@Entity({ repository: () => ProductRepository })
 export class Product {
 
-   @PrimaryKey()
-   id!: number;
+  [EntityRepositoryType]?: ProductRepository;
 
-   @Property()
-   name!: String;
+  @PrimaryKey()
+  id!: number;
 
-   @Property({ type: 'text' })
-   description!: String;
+  @Property()
+  name!: String;
 
-   @Property()
-   weight!: String;
+  @Property({ type: 'text' })
+  description!: String;
 
-   @Property()
-   buyingPrice!: number;
+  @Property()
+  weight!: number;
 
-   @Property()
-   sellingPrice!: number;
+  @Property()
+  buyingPrice!: number;
 
-   @Property()
-   stock!: number;
+  @Property()
+  sellingPrice!: number;
 
-   @Property()
-   imgURL!: String;
+  @Property()
+  stock!: number;
+
+  @Property()
+  imgURL?: String;
 
 }

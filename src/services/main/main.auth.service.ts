@@ -1,10 +1,12 @@
 import { Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
-import { User } from 'src/entities/user.entity';
 import { DBService } from 'src/services/main/main.database.service';
 import { JWTPayloadDTO } from 'src/dtos/auth/auth.jwtpayload.dto';
 import { ConfigService } from './main.config.service';
-import bcrypt from "bcrypt";
+import { Session } from 'src/entities/session.entity';
+import { User } from 'src/entities/user.entity';
+import * as bcrypt from 'bcrypt';
+import { ref } from '@mikro-orm/core';
 
 @Injectable()
 export class AuthService {
@@ -14,49 +16,60 @@ export class AuthService {
     private readonly configService: ConfigService
   ) {}
 
-  async findAuthUser({srcId, srcEmail}: {srcId?: number, srcEmail?: string}) : Promise<User | null> {
-    if(!srcId && !srcEmail){
-      return null;
-    }
-
-    if(!srcId){
-      //await this.dbService.findOneByEmail(srcEmail);
-    } else {
-      //await this.dbService.findOneById(srcId);
-    }
-
-    const temp = new User();
-    temp.id = srcId ?? 10;
-    temp.fullName = "Marcelo Test",
-    temp.email = srcEmail ?? 'test@test.com';
-    return temp; //Change here
-  }
-
   async validateUser(email: string, pass: string): Promise<User | null> {
-    const user = await this.findAuthUser({srcEmail: email});
+    const userRepo = this.dbService.em.getRepository(User);
+    const user = await userRepo.findAuthUser({srcEmail: email});
     if(!user){
       return null;
     }
 
-    //const match = await bcrypt.compare(pass, user.password);
-    /*if (!match) {
+    const match = await bcrypt.compare(pass, user.password);
+    if (!match) {
       return null;
-    }*/
+    }
 
     return user;
   }
 
-  async loginUser(foundUser: User) {
+  async loginUser(user: User) {
+    console.log(user);
+    const existingSession = await user.session!.load();
+    if(existingSession){
+      return { access_token: existingSession.token };
+    }
+
     const payload = JWTPayloadDTO.fromData({
-      sub: foundUser.id,
+      sub: user.id,
       iss: this.configService.props.JWT_ISSUER,
       aud: this.configService.props.JWT_AUDIENCE,
-      duration: this.configService.props.JWT_DURATION,
-      email: foundUser.email,
-      fullName: foundUser.fullName
+      duration: this.configService.props.JWT_DURATION * 1000,
+      email: user.email,
+      fullName: user.fullName
     });
 
     const token = await this.jwtService.signAsync(payload.toObject());
+
+    const em = this.dbService.em;
+
+    let session: Session;
+    if(!existingSession){
+      session = em.create(Session, {
+        token: token,
+        endingDate: new Date(payload.exp),
+        user: user,
+      });
+
+      user.session = ref(session);
+    } else {
+      session = existingSession;
+      session.token = token;
+      session.endingDate = new Date(payload.exp);
+    }
+    
+    em.persist(session);
+    em.persist(user);
+    await em.flush();
+
     return { access_token: token };
   }
 }

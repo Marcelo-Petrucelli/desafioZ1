@@ -20,4 +20,4 @@ const securityServiceProvider = {
   exports: [ securityServiceProvider ]
 })
 
-export class SecurityModule {}
+export class SecurityModule {};

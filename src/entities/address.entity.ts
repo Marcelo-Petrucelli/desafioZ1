@@ -1,31 +1,34 @@
-import { Entity, ManyToOne, PrimaryKey, Property } from '@mikro-orm/core';
-import { User } from './user.entity';
+import { Entity, EntityRepositoryType, ManyToOne, PrimaryKey, Property } from '@mikro-orm/core';
+import { AddressRepository } from 'src/entities/address.repository';
+import { User } from 'src/entities/user.entity';
 
-@Entity()
+@Entity({ repository: () => AddressRepository })
 export class Address {
 
-   @PrimaryKey()
-   id!: number;
+  [EntityRepositoryType]?: AddressRepository;
 
-   @Property()
-   city!: String;
+  @PrimaryKey()
+  id!: number;
 
-   @Property()
-   state!: String;
+  @Property()
+  city!: String;
 
-   @Property({ length: 8 })
-   cep!: String;
+  @Property()
+  state!: String;
 
-   @Property()
-   street!: String;
+  @Property({ length: 8 })
+  cep!: String;
 
-   @Property()
-   number!: number;
+  @Property()
+  street!: String;
 
-   @Property()
-   district!: String;
+  @Property()
+  number!: number;
 
-   @ManyToOne()
-   owner!: User;
+  @Property()
+  district!: String;
+
+  @ManyToOne()
+  owner!: User;
 
 }

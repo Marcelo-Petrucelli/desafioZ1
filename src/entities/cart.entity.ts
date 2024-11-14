@@ -1,19 +1,22 @@
-import { Collection, Entity, OneToMany, PrimaryKey, Property } from '@mikro-orm/core';
-import { CartItem } from './cartItem.entity';
+import { Collection, Entity, EntityRepositoryType, OneToMany, PrimaryKey, Property } from '@mikro-orm/core';
+import { CartRepository } from 'src/entities/cart.repository';
+import { CartItem } from 'src/entities/cartItem.entity';
 
-@Entity()
+@Entity({ repository: () => CartRepository })
 export class Cart {
 
-   @PrimaryKey()
-   id!: number;
+  [EntityRepositoryType]?: CartRepository;
 
-   @OneToMany({ mappedBy: 'cart' })
-   cartItem = new Collection<CartItem>(this);
+  @PrimaryKey()
+  id!: number;
 
-   @Property()
-   discount!: number;
+  @OneToMany({ mappedBy: 'cart' })
+  cartItem = new Collection<CartItem>(this);
 
-   @Property()
-   createdAt = new Date();
+  @Property()
+  discount!: number;
+
+  @Property()
+  createdAt = new Date();
 
 }

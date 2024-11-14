@@ -1,28 +1,29 @@
-import { Entity, ManyToOne, PrimaryKey, Property } from '@mikro-orm/core';
-import { User } from './user.entity';
+import { Entity, EntityRepositoryType, OneToOne, OptionalProps, PrimaryKey, Property } from '@mikro-orm/core';
+import { SessionRepository } from './session.repository';
+import { User } from 'src/entities/user.entity';
 
-@Entity()
+@Entity({ repository: () => SessionRepository })
 export class Session {
 
-   @PrimaryKey()
-   id!: number;
+  [EntityRepositoryType]?: SessionRepository;
+  [OptionalProps]?: 'startingDate' | 'updatedDate';
 
-   @Property()
-   active!: boolean;
+  @PrimaryKey()
+  id!: number;
 
-   @Property()
-   token!: String;
+  @Property({ type: 'text'})
+  token!: String;
 
-   @Property()
-   startingDate = new Date();
+  @Property()
+  startingDate = new Date();
 
-   @Property({ onUpdate: () => new Date() })
-   updatedDate = new Date();
+  @Property({ onUpdate: () => new Date() })
+  updatedDate = new Date();
 
-   @Property()
-   endingDate!: Date;
+  @Property()
+  endingDate!: Date;
 
-   @ManyToOne({ lazy: true })
-   user!: User;
+  @OneToOne({ mappedBy: 'session', lazy: true })
+  user!: User;
 
 }

@@ -22,7 +22,7 @@ export class JWTPayloadDTO {
     ret.iss = iss;
     ret.aud = aud;
     ret.iat = Date.now();
-    ret.exp = ret.iat + duration;
+    ret.exp = ret.iat + (duration * 1000);
     ret.user = {id: sub, fullName: fullName, email: email };
     return ret;
   }

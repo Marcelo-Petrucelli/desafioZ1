@@ -1,20 +1,23 @@
-import { Entity, ManyToOne, OneToOne, PrimaryKey, Property } from '@mikro-orm/core';
-import { Cart } from './cart.entity';
-import { Product } from './product.entity';
+import { Entity, EntityRepositoryType, ManyToOne, OneToOne, PrimaryKey, Property } from '@mikro-orm/core';
+import { CartItemRepository } from './cartItem.repository';
+import { Product } from 'src/entities/product.entity';
+import { Cart } from 'src/entities/cart.entity';
 
-@Entity()
+@Entity({ repository: () => CartItemRepository })
 export class CartItem {
 
-   @PrimaryKey()
-   id!: number;
+  [EntityRepositoryType]?: CartItemRepository;
 
-   @OneToOne()
-   product!: Product;
+  @PrimaryKey()
+  id!: number;
 
-   @ManyToOne()
-   cart!: Cart;
+  @OneToOne()
+  product!: Product;
 
-   @Property()
-   quantity!: number;
+  @ManyToOne()
+  cart!: Cart;
+
+  @Property()
+  quantity!: number;
 
 }

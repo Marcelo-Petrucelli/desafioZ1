@@ -23,4 +23,4 @@ import { JwtStrategy } from 'src/services/auth/auth.jwtstrategy.service';
   exports: [ AuthService ]
 })
 
-export class AuthModule {}
+export class AuthModule {};

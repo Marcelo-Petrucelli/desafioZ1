@@ -1,6 +1,7 @@
 import { ExtractJwt, Strategy } from 'passport-jwt';
 import { PassportStrategy } from '@nestjs/passport';
 import { Injectable, UnauthorizedException } from '@nestjs/common';
+import { DBService } from 'src/services/main/main.database.service';
 import { AuthService } from 'src/services/main/main.auth.service';
 import { ConfigService } from 'src/services/main/main.config.service';
 import { JWTPayloadDTO } from 'src/dtos/auth/auth.jwtpayload.dto';
@@ -8,7 +9,11 @@ import { User } from 'src/entities/user.entity';
 
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy) {
-  constructor(private readonly authService: AuthService, private readonly configService: ConfigService) {
+  constructor(
+    private readonly dbService: DBService,
+    private readonly authService: AuthService, 
+    readonly configService: ConfigService
+  ) {
     super({
       jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
       ignoreExpiration: false,
@@ -22,7 +27,8 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
       throw new UnauthorizedException();
     }
 
-    const user = await this.authService.findAuthUser({srcId: authPayload.user.id, srcEmail: authPayload.user.email});
+    const userRepo = this.dbService.em.getRepository(User);
+    const user = await userRepo.findAuthUser({srcId: authPayload.user.id, srcEmail: authPayload.user.email});
     if(!user) {
       throw new UnauthorizedException();
     }
