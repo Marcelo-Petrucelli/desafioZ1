@@ -14,9 +14,8 @@ export class MainController {
   @Post('auth/login')
   async login(@Req() req: Request) {
     //TODO - Check if not already loggedIn, if so forward this request to another controller
-
-    //const token = this.authService.login(req.user as User);
-    return req.user as User;
+    const token = this.authService.loginUser(req.user as User);
+    return token;
   }
 
   @UseGuards(JwtAuthGuard)
