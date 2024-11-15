@@ -1,12 +1,12 @@
 import { Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { DBService } from 'src/services/main/main.database.service';
-import { JWTPayloadDTO } from 'src/dtos/auth/auth.jwtpayload.dto';
+import { JWTPayloadModel } from 'src/models/auth.jwtpayload.model';
 import { ConfigService } from './main.config.service';
 import { Session } from 'src/entities/session.entity';
 import { User } from 'src/entities/user.entity';
-import * as bcrypt from 'bcrypt';
 import { ref } from '@mikro-orm/core';
+import * as bcrypt from 'bcrypt';
 
 @Injectable()
 export class AuthService {
@@ -18,7 +18,7 @@ export class AuthService {
 
   async validateUser(email: string, pass: string): Promise<User | null> {
     const userRepo = this.dbService.em.getRepository(User);
-    const user = await userRepo.findAuthUser({srcEmail: email});
+    const user = await userRepo.findUserByIdOrEmail({srcEmail: email});
     if(!user){
       return null;
     }
@@ -38,7 +38,7 @@ export class AuthService {
       return { access_token: existingSession.token };
     }
 
-    const payload = JWTPayloadDTO.fromData({
+    const payload = JWTPayloadModel.fromData({
       sub: user.id,
       iss: this.configService.props.JWT_ISSUER,
       aud: this.configService.props.JWT_AUDIENCE,

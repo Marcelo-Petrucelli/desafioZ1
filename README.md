@@ -4,14 +4,15 @@
 
 - MariaDB (MySQL)
 - NodeJS
-- Usando o framework [NestJS](https://github.com/nestjs/nest) (Express platform)
-
-```
-$ mysql -u <user> -p < marcelo_desafio_Z1_2024.dump
-$ npm install
-```
+- Framework [NestJS](https://github.com/nestjs/nest) (Express platform)
+- Mikro ORM
+- Passport com BasicAuth e JWT
 
 ## Rodar Projeto
+
+```bash
+$ npm install
+```
 
 Editar .env com as variáveis de ambiente/acesso ao banco
 ```bash
@@ -32,6 +33,8 @@ $ npm run start:dev
 $ npm run start:prod
 ```
 
+Criei uma rota: ```/forceSchemaRefresh``` para ser acessada que irá rodar a ```Migration inicial``` e criar alguns usuário, seus endereços e alguns produtos.
+
 ## Rodar tests
 
 ```bash
@@ -51,8 +54,12 @@ Check out a ....
 
 ## Sobre o Desenvolvimento
 
-When you're ready...
+O projeto está propositalmente organizado entre pastas por funcionalidade e, seus arquivos internos, com nomes representando sua hierarquia interna.
+
+Em alguns casos, como entidades, a criação de pastas não foi feita já que multiplas entidades são utilizadas em multiplas funcionalidades.
+
+Em outros casos, situações como controladoras, casos como ```controllers/auth/auth.controller.ts``` acaba ocorrendo e, apesar de parecerem redundates, evitam colisões de nomes nos arquivos, caso sejam referenciados diretamente ou através de caminhos relativos.
 
 ## License
 
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+Nest, and this whole project are [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).

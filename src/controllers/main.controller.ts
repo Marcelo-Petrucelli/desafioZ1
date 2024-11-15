@@ -16,7 +16,7 @@ export class MainController {
   }
   
   @Get('forceSchemaRefresh/:force') //Only for debugging or cleaning DB
-  async getForceSchemaRefresh(@Req() req: Request, @Param('force', ParseBoolPipe) force: boolean) {
+  async getForceSchemaRefresh(@Param('force', ParseBoolPipe) force: boolean) {
     const migrator = this.dbService.orm.getMigrator();
 
     if(force || (await migrator.getExecutedMigrations()).length <= 0){
