@@ -1,6 +1,6 @@
 import { Global, Module } from '@nestjs/common';
 import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
-import { ConfigModule } from './config.module';
+import { ConfigModule } from 'src/modules/config.module';
 
 const securityServiceProvider = {
   provide: 'MAIN_RATE_LIMIT',

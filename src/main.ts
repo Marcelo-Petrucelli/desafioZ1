@@ -1,8 +1,8 @@
 import { NestFactory } from '@nestjs/core';
 import { NestExpressApplication } from '@nestjs/platform-express';
-import { MainModule } from './modules/main.module';
-import { ConfigService } from './services/main/main.config.service';
-import { DBService } from './services/main/main.database.service';
+import { MainModule } from 'src/modules/main.module';
+import { ConfigService } from 'src/services/main/main.config.service';
+import { DBService } from 'src/services/main/main.database.service';
 import helmet from 'helmet';
 
 (async function bootstrap() {

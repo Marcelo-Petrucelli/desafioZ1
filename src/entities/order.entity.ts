@@ -1,6 +1,6 @@
 import { Collection, Entity, EntityRepositoryType, Enum, ManyToMany, PrimaryKey, Property } from '@mikro-orm/core';
 import { OrderRepository } from 'src/entities/order.repository';
-import { Product } from './product.entity';
+import { Product } from 'src/entities/product.entity';
 
 @Entity({ repository: () => OrderRepository })
 export class Order {
@@ -10,8 +10,8 @@ export class Order {
   @PrimaryKey()
   id!: number;
 
-  @ManyToMany()
-  cartItem = new Collection<Product>(this);
+  @ManyToMany({ mappedBy: 'orders' })
+  products = new Collection<Product>(this);
 
   @Enum(() => PaymentMethod)
   paymentMethod!: PaymentMethod;

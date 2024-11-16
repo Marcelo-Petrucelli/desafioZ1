@@ -1,5 +1,5 @@
 import { Entity, EntityRepositoryType, OneToOne, OptionalProps, PrimaryKey, Property } from '@mikro-orm/core';
-import { SessionRepository } from './session.repository';
+import { SessionRepository } from 'src/entities/session.repository';
 import { User } from 'src/entities/user.entity';
 
 @Entity({ repository: () => SessionRepository })

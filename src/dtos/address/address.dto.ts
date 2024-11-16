@@ -1,4 +1,4 @@
-import { StaticImplements, BaseStaticDTO } from './base.dto';
+import { StaticImplements, BaseStaticDTO } from 'src/dtos/base.dto';
 import { IsAlpha, IsNumber, IsNumberString, IsOptional, IsString, MinLength } from 'class-validator';
 import { Address } from 'src/entities/address.entity';
 

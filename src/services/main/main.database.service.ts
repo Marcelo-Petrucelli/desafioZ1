@@ -3,7 +3,7 @@ import { Options, MySqlDriver, MikroORM, EntityManager, RequestContext } from '@
 import { TsMorphMetadataProvider } from '@mikro-orm/reflection';
 import { Migrator } from '@mikro-orm/migrations';
 
-import { ConfigService } from './main.config.service';
+import { ConfigService } from 'src/services/main/main.config.service';
 import { NextFunction } from 'express';
 
 @Injectable()

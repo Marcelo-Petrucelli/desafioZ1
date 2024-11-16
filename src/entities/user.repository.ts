@@ -2,6 +2,7 @@ import { EntityRepository } from '@mikro-orm/mysql';
 import { User } from 'src/entities/user.entity';
 
 export class UserRepository extends EntityRepository<User> {
+  
   async findUserByIdOrEmail({srcId, srcEmail}: {srcId?: number, srcEmail?: string}) : Promise<User | null> {
     if(!srcId && !srcEmail){
         return null;
@@ -12,4 +13,5 @@ export class UserRepository extends EntityRepository<User> {
     }      
     return await this.findOne(srcId); //same as { id: srcId }
   }
+  
 }

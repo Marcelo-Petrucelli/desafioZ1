@@ -5,7 +5,7 @@ import { User } from 'src/entities/user.entity';
 import { Address } from 'src/entities/address.entity';
 import { UserRepository } from 'src/entities/user.repository';
 import { AddressRepository } from 'src/entities/address.repository';
-import { AddressDTO } from 'src/dtos/address.dto';
+import { AddressDTO } from 'src/dtos/address/address.dto';
 
 @Controller('address')
 export class AddressController {
@@ -17,28 +17,22 @@ export class AddressController {
     this.addressRepo = this.dbService.em.getRepository(Address);
   }
 
-  @Get('list')
-  @UseGuards(JwtAuthGuard)
-  async getListAddresses(@Query('limit', new DefaultValuePipe(-1), new ParseIntPipe({ optional: true })) limit?: number) {
-    const queried = limit === -1 ? await this.addressRepo.findAll() : await this.addressRepo.findAll({ limit: limit });
-    return queried.map((address) => { return AddressDTO.from(address);});
-  }
-
   @Post('add')
   @HttpCode(HttpStatus.CREATED)
   @UseGuards(JwtAuthGuard)
-  async postAddProductToCart(@Body(ValidationPipe) addressDTO: AddressDTO) {
+  async postAddAddress(@Body(ValidationPipe) addressDTO: AddressDTO) {
     const foundUser = await this.userRepo.findOne(addressDTO.ownerId);
     if(!foundUser){
       throw new NotFoundException('OwnerId could not be found!');
     }
-    this.addressRepo.createAddressFromDTO(foundUser, addressDTO);
+    await this.addressRepo.createAddressFromDTO(foundUser, addressDTO);
     await this.dbService.em.flush();
   }
 
   @Delete('remove/:id')
+  @HttpCode(HttpStatus.ACCEPTED)
   @UseGuards(JwtAuthGuard)
-  async postRemoveProductFromCart(@Param('id', ParseIntPipe) id: number) { //TODO - @Param('id', AddressByIdPipe) address: addressEntity
+  async deleteRemoveAddress(@Param('id', ParseIntPipe) id: number) { //TODO - @Param('id', AddressByIdPipe) address: addressEntity
     const foundAddress = await this.addressRepo.findOne(id);
     if(!foundAddress){
       throw NotFoundException;
@@ -46,7 +40,16 @@ export class AddressController {
     await this.dbService.em.removeAndFlush(foundAddress);
   }
 
+  @Get('list')
+  @HttpCode(HttpStatus.OK)
+  @UseGuards(JwtAuthGuard)
+  async getListAddresses(@Query('limit', new DefaultValuePipe(-1), new ParseIntPipe({ optional: true })) limit?: number) {
+    const queried = limit === -1 ? await this.addressRepo.findAll() : await this.addressRepo.findAll({ limit: limit });
+    return queried.map((address) => { return AddressDTO.from(address);});
+  }
+
   @Get(':id')
+  @HttpCode(HttpStatus.OK)
   @UseGuards(JwtAuthGuard)
   async getAddress(@Param('id', ParseIntPipe) id: number) { //TODO - @Param('id', AddressByIdPipe) address: addressEntity
     const foundAddress = await this.addressRepo.findOne(id);

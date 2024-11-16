@@ -1,9 +1,8 @@
-import { StaticImplements, BaseStaticDTO } from './base.dto';
+import { StaticImplements, BaseStaticDTO } from 'src/dtos/base.dto';
 import { IsNumber, IsOptional, IsString, ValidateNested } from 'class-validator';
 import { Type } from 'class-transformer';
-import { CartDTO } from './cart.dto';
-import { AddressDTO } from './address.dto';
-import { User } from 'src/entities/user.entity';
+import { GetCartDTO } from 'src/dtos/cart/get.cart.dto';
+import { AddressDTO } from 'src/dtos/address/address.dto';
 
 @StaticImplements<BaseStaticDTO>()
 export class UserDTO {
@@ -27,8 +26,8 @@ export class UserDTO {
 
   @IsOptional()
   @ValidateNested()
-  @Type(() => CartDTO)
-  cart?: CartDTO;
+  @Type(() => GetCartDTO)
+  cart?: GetCartDTO;
 
   public static from(product: any) : UserDTO {
       return new UserDTO();

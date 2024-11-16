@@ -1,9 +1,9 @@
-import { Entity, EntityRepositoryType, ManyToOne, OneToOne, PrimaryKey, Property } from '@mikro-orm/core';
-import { CartItemRepository } from './cartItem.repository';
+import { Entity, EntityRepositoryType, ManyToOne, PrimaryKey, Property } from '@mikro-orm/core';
+import { CartItemRepository } from 'src/entities/cartItem.repository';
 import { Product } from 'src/entities/product.entity';
 import { Cart } from 'src/entities/cart.entity';
 
-//Caso não hajam informações adicionais, essa entidade inteira poderia ser subistituida por apenas uma relação de ManyToMany de Product e Cart
+//If there are no additional information fields, this entity may be swapped simply by a ManyToMany between Product and Cart
 @Entity({ repository: () => CartItemRepository })
 export class CartItem {
 
@@ -12,7 +12,7 @@ export class CartItem {
   @PrimaryKey()
   id!: number;
 
-  @OneToOne()
+  @ManyToOne({ eager: true })
   product!: Product;
 
   @ManyToOne()
