@@ -32,8 +32,7 @@ export class AuthService {
   }
 
   async loginUser(user: User) {
-    console.log(user);
-    const existingSession = await user.session!.load();
+    const existingSession = await user.session?.load();
     if(existingSession){
       return { access_token: existingSession.token };
     }

@@ -17,10 +17,10 @@ export class AddressController {
     this.addressRepo = this.dbService.em.getRepository(Address);
   }
 
-  @Post('add')
+  @Post('create')
   @HttpCode(HttpStatus.CREATED)
   @UseGuards(JwtAuthGuard)
-  async postAddAddress(@Body(ValidationPipe) addressDTO: AddressDTO) {
+  async postCreateAddress(@Body(ValidationPipe) addressDTO: AddressDTO) {
     const foundUser = await this.userRepo.findOne(addressDTO.ownerId);
     if(!foundUser){
       throw new NotFoundException('OwnerId could not be found!');
