@@ -4,7 +4,7 @@ import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { DBService } from 'src/services/main/main.database.service';
 import { AuthService } from 'src/services/main/main.auth.service';
 import { ConfigService } from 'src/services/main/main.config.service';
-import { JWTPayloadModel } from 'src/models/auth.jwtpayload.model';
+import { JWTPayloadDTO } from 'src/dtos/auth.jwtpayload.dto';
 import { User } from 'src/entities/user.entity';
 
 @Injectable()
@@ -22,7 +22,7 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
   }
 
   async validate(payload: any) : Promise<User> { //Passport will build an object and set it in the Request
-    const authPayload = JWTPayloadModel.fromPayload(payload);
+    const authPayload = JWTPayloadDTO.fromPayload(payload);
     if(!authPayload){
       throw new UnauthorizedException();
     }

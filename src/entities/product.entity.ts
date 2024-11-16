@@ -1,19 +1,20 @@
-import { Entity, EntityRepositoryType, PrimaryKey, Property } from '@mikro-orm/core';
+import { Entity, EntityRepositoryType, OptionalProps, PrimaryKey, Property } from '@mikro-orm/core';
 import { ProductRepository } from './product.repository';
 
 @Entity({ repository: () => ProductRepository })
 export class Product {
 
   [EntityRepositoryType]?: ProductRepository;
+  [OptionalProps]?: 'createdAt';
 
   @PrimaryKey()
   id!: number;
 
   @Property()
-  name!: String;
+  name!: string;
 
   @Property({ type: 'text' })
-  description!: String;
+  description!: string;
 
   @Property()
   weight!: number;
@@ -28,6 +29,9 @@ export class Product {
   stock!: number;
 
   @Property()
-  imgURL?: String;
+  imgURL?: string;
+
+  @Property()
+  createdAt = new Date();
 
 }

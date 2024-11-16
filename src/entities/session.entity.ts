@@ -6,22 +6,22 @@ import { User } from 'src/entities/user.entity';
 export class Session {
 
   [EntityRepositoryType]?: SessionRepository;
-  [OptionalProps]?: 'startingDate' | 'updatedDate';
+  [OptionalProps]?: 'createdAt' | 'updatedAt';
 
   @PrimaryKey()
   id!: number;
 
   @Property({ type: 'text'})
-  token!: String;
+  token!: string;
 
   @Property()
-  startingDate = new Date();
+  createdAt = new Date();
 
   @Property({ onUpdate: () => new Date() })
-  updatedDate = new Date();
+  updatedAt = new Date();
 
   @Property()
-  endingDate!: Date;
+  endingAt!: Date;
 
   @OneToOne({ mappedBy: 'session', lazy: true })
   user!: User;

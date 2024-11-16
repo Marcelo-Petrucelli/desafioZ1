@@ -11,22 +11,22 @@ export class Address {
   id!: number;
 
   @Property()
-  city!: String;
+  city!: string;
 
   @Property()
-  state!: String;
+  state!: string;
 
   @Property({ length: 8 })
-  cep!: String;
+  cep!: string;
 
   @Property()
-  street!: String;
+  street!: string;
 
   @Property()
   number!: number;
 
   @Property()
-  district!: String;
+  district!: string;
 
   @ManyToOne()
   owner!: User;

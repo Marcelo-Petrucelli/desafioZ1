@@ -1,4 +1,4 @@
-import { Controller, Get, Param, ParseBoolPipe, Req, Res } from '@nestjs/common';
+import { Controller, DefaultValuePipe, Get, Param, ParseBoolPipe, Req, Res } from '@nestjs/common';
 import { Request, Response } from 'express';
 import { DBService } from 'src/services/main/main.database.service';
 
@@ -10,13 +10,8 @@ export class MainController {
   @Get()
   getIndex(@Req() req: Request) {}
   
-  @Get('forceSchemaRefresh')
-  async getdefaultForceSchemaRefresh(@Res() res: Response) {
-    return res.redirect('forceSchemaRefresh/false');
-  }
-  
-  @Get('forceSchemaRefresh/:force') //Only for debugging or cleaning DB
-  async getForceSchemaRefresh(@Param('force', ParseBoolPipe) force: boolean) {
+  @Get(['forceSchemaRefresh/:force', 'forceSchemaRefresh']) //Only for debugging or cleaning DB
+  async getForceSchemaRefresh(@Param('force', new DefaultValuePipe(false), ParseBoolPipe) force: boolean) {
     const migrator = this.dbService.orm.getMigrator();
 
     if(force || (await migrator.getExecutedMigrations()).length <= 0){

@@ -1,5 +1,7 @@
-export class JWTPayloadModel {
-  //RFC 7519
+export class JWTPayloadDTO {
+  //Seguindo RFC 7519
+  //Temos que inicializar os fields para que o Typescript crie no objecto em JS cada campo, assim podemos mapea-los corretamente.
+  //TODO - Possívelmente utilizar o class-validator em um Pipe para simplificar esse processo.
   public sub: number = 0;
   public iss: string = "";
   public aud: string = "";
@@ -16,8 +18,8 @@ export class JWTPayloadModel {
     duration: number,
     email: string,
     fullName: string
-  }) : JWTPayloadModel {
-    const ret = new JWTPayloadModel();
+  }) : JWTPayloadDTO {
+    const ret = new JWTPayloadDTO();
     ret.sub = sub;
     ret.iss = iss;
     ret.aud = aud;
@@ -27,9 +29,9 @@ export class JWTPayloadModel {
     return ret;
   }
 
-  static fromPayload(payload: any) : JWTPayloadModel | null {
+  static fromPayload(payload: any) : JWTPayloadDTO | null {
     if(typeof payload === 'object' && payload !== null){  //Null is of type Object -.-
-      const ret = new JWTPayloadModel();
+      const ret = new JWTPayloadDTO();
 
       const properties = Object.getOwnPropertyNames(ret);
       const userProperties = Object.getOwnPropertyNames(ret.user);

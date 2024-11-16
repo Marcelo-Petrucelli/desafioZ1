@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { DBService } from 'src/services/main/main.database.service';
-import { JWTPayloadModel } from 'src/models/auth.jwtpayload.model';
+import { JWTPayloadDTO } from 'src/dtos/auth.jwtpayload.dto';
 import { ConfigService } from './main.config.service';
 import { Session } from 'src/entities/session.entity';
 import { User } from 'src/entities/user.entity';
@@ -38,7 +38,7 @@ export class AuthService {
       return { access_token: existingSession.token };
     }
 
-    const payload = JWTPayloadModel.fromData({
+    const payload = JWTPayloadDTO.fromData({
       sub: user.id,
       iss: this.configService.props.JWT_ISSUER,
       aud: this.configService.props.JWT_AUDIENCE,
@@ -55,7 +55,7 @@ export class AuthService {
     if(!existingSession){
       session = em.create(Session, {
         token: token,
-        endingDate: new Date(payload.exp),
+        endingAt: new Date(payload.exp),
         user: user,
       });
 
@@ -63,7 +63,7 @@ export class AuthService {
     } else {
       session = existingSession;
       session.token = token;
-      session.endingDate = new Date(payload.exp);
+      session.endingAt = new Date(payload.exp);
     }
     
     em.persist(session);

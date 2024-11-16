@@ -4,7 +4,7 @@ import { ConfigService, DevelopmentConfigService, ProductionConfigService } from
 const configServiceProvider = {
   provide: ConfigService,
   useClass:
-    (process.env.NODE_ENV != undefined && (process.env.NODE_ENV as String).trim() === 'development')
+    (process.env.NODE_ENV != undefined && (process.env.NODE_ENV as string).trim() === 'development')
       ? DevelopmentConfigService
       : ProductionConfigService,
 };

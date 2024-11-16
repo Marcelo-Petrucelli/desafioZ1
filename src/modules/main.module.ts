@@ -6,7 +6,10 @@ import { AuthModule } from 'src/modules/auth.module';
 
 import { MainController } from 'src/controllers/main.controller';
 import { AuthController } from 'src/controllers/auth/auth.controller';
+//import { UserController } from 'src/controllers/user/user.controller';
+import { AddressController } from 'src/controllers/address/address.controller';
 import { ProductController } from 'src/controllers/products/products.controller';
+import { CartController } from 'src/controllers/cart/cart.controller';
 
 @Module({
   imports: [
@@ -15,7 +18,7 @@ import { ProductController } from 'src/controllers/products/products.controller'
     DatabaseModule,
     AuthModule
   ],
-  controllers: [MainController, AuthController, ProductController],
+  controllers: [MainController, AuthController/*, UserController*/, AddressController, ProductController, CartController],
 })
 
 export class MainModule {};

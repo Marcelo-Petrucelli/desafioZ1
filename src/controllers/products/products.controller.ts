@@ -17,7 +17,7 @@ export class ProductController {
   @Get(':id')
   @UseGuards(JwtAuthGuard)
   @HttpCode(200)
-  async getProduct(@Param('id', ParseIntPipe) id: number) {
+  async getProduct(@Param('id', ParseIntPipe) id: number) {  //TODO - @Param('id', ProductByIdPipe) product: productEntity
     const foundProduct = await this.productRepo.findOne(id);
     if(!foundProduct){
       throw NotFoundException;
@@ -25,16 +25,16 @@ export class ProductController {
     return ProductDTO.from(foundProduct);
   }
 
-  @Post('/create')
+  @Post('create')
   @UseGuards(JwtAuthGuard)
   async postCreateProduct(@Req() req: Request) {
     return req.user;
   }
 
-  @Get('/list')
+  @Get('list')
   @UseGuards(JwtAuthGuard)
-  async getListProducts(@Query('max', new DefaultValuePipe(-1), ParseIntPipe) max: number, @Req() req: Request) {
-    return max === -1 ? await this.productRepo.findAll() : await this.productRepo.findAll({ limit: max });
+  async getListProducts(@Query('limit', new DefaultValuePipe(-1), new ParseIntPipe({ optional: true })) limit?: number) {
+    return limit === -1 ? await this.productRepo.findAll() : await this.productRepo.findAll({ limit: limit });
   }
 
 }
