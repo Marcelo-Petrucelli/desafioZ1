@@ -1,12 +1,12 @@
 import { EntityRepository, ref } from '@mikro-orm/mysql';
-import { User } from 'src/entities/user.entity';
-import { Cart } from 'src/entities/cart.entity';
-import { Product } from 'src/entities/product.entity';
-import { CartItem } from 'src/entities/cartItem.entity';
-import { CartItemRepository } from 'src/entities/cartItem.repository';
-import { ProductRepository } from 'src/entities/product.repository';
-import { AlterCartDTO } from 'src/dtos/cart/alter.cart.dto';
-import { CreateCartDTO } from 'src/dtos/cart/create.cart.dto';
+import { User } from '../entities/user.entity';
+import { Cart } from '../entities/cart.entity';
+import { Product } from '../entities/product.entity';
+import { CartItem } from '../entities/cartItem.entity';
+import { CartItemRepository } from '../entities/cartItem.repository';
+import { ProductRepository } from '../entities/product.repository';
+import { AlterCartDTO } from '../dtos/cart/alter.cart.dto';
+import { CreateCartDTO } from '../dtos/cart/create.cart.dto';
 import { BadRequestException } from '@nestjs/common';
 
 export class CartRepository extends EntityRepository<Cart> {

@@ -1,11 +1,11 @@
 import { Body, Controller, DefaultValuePipe, Delete, Get, HttpCode, HttpStatus, NotFoundException, Param, ParseIntPipe, Post, Query, UseGuards, ValidationPipe } from '@nestjs/common';
-import { JwtAuthGuard } from 'src/guards/auth/auth.jwtAuth.guard';
-import { DBService } from 'src/services/main/main.database.service';
-import { User } from 'src/entities/user.entity';
-import { Address } from 'src/entities/address.entity';
-import { UserRepository } from 'src/entities/user.repository';
-import { AddressRepository } from 'src/entities/address.repository';
-import { GetAddressDTO } from 'src/dtos/address/get.address.dto';
+import { JwtAuthGuard } from '../../guards/auth/auth.jwtAuth.guard';
+import { DBService } from '../../services/main/main.database.service';
+import { User } from '../../entities/user.entity';
+import { Address } from '../../entities/address.entity';
+import { UserRepository } from '../../entities/user.repository';
+import { AddressRepository } from '../../entities/address.repository';
+import { GetAddressDTO } from '../../dtos/address/get.address.dto';
 
 @Controller('address')
 export class AddressController {
@@ -35,7 +35,7 @@ export class AddressController {
   async deleteRemoveAddress(@Param('id', ParseIntPipe) id: number) { //TODO - @Param('id', AddressByIdPipe) address: addressEntity
     const foundAddress = await this.addressRepo.findOne(id);
     if(!foundAddress){
-      throw NotFoundException;
+      throw new NotFoundException(`There is no address with Id ${id}.`);
     }
     await this.dbService.em.removeAndFlush(foundAddress);
   }

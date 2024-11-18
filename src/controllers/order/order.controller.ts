@@ -1,11 +1,11 @@
 import { Body, Controller, DefaultValuePipe, ForbiddenException, Get, HttpCode, HttpStatus, NotFoundException, Param, ParseIntPipe, Post, Query, Req, UnprocessableEntityException, UseGuards, ValidationPipe } from '@nestjs/common';
-import { JwtAuthGuard } from 'src/guards/auth/auth.jwtAuth.guard';
-import { DBService } from 'src/services/main/main.database.service';
-import { User } from 'src/entities/user.entity';
-import { Order } from 'src/entities/order.entity';
-import { OrderRepository } from 'src/entities/order.repository';
-import { GetOrderDTO } from 'src/dtos/order/get.order.dto';
-import { PlaceOrderDTO } from 'src/dtos/order/place.order.dto';
+import { JwtAuthGuard } from '../../guards/auth/auth.jwtAuth.guard';
+import { DBService } from '../../services/main/main.database.service';
+import { User } from '../../entities/user.entity';
+import { Order } from '../../entities/order.entity';
+import { OrderRepository } from '../../entities/order.repository';
+import { GetOrderDTO } from '../../dtos/order/get.order.dto';
+import { PlaceOrderDTO } from '../../dtos/order/place.order.dto';
 import { Request } from 'express';
 import { ref } from '@mikro-orm/core';
 
@@ -23,7 +23,7 @@ export class OrderController {
   async postPlaceOrder(@Req() req : Request, @Body(ValidationPipe) placeOrderDTO: PlaceOrderDTO) {
     const user = req.user! as User;
     if(!user){
-      throw ForbiddenException;
+      throw new ForbiddenException(`Token not set. Use /auth endpoint beforehand.`);
     }
     const cart = await ref(user.cart)?.load();
     if(!cart){

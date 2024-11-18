@@ -1,10 +1,10 @@
 import { Body, Controller, DefaultValuePipe, Delete, Get, HttpCode, HttpStatus, NotFoundException, Param, ParseBoolPipe, ParseIntPipe, Post, Query, UseGuards, ValidationPipe } from '@nestjs/common';
-import { JwtAuthGuard } from 'src/guards/auth/auth.jwtAuth.guard';
-import { DBService } from 'src/services/main/main.database.service';
-import { Product } from 'src/entities/product.entity';
-import { ProductRepository } from 'src/entities/product.repository';
-import { GetProductDTO } from 'src/dtos/product/get.product.dto';
-import { CreateProductDTO } from 'src/dtos/product/create.product.dto';
+import { JwtAuthGuard } from '../../guards/auth/auth.jwtAuth.guard';
+import { DBService } from '../../services/main/main.database.service';
+import { Product } from '../../entities/product.entity';
+import { ProductRepository } from '../../entities/product.repository';
+import { GetProductDTO } from '../../dtos/product/get.product.dto';
+import { CreateProductDTO } from '../../dtos/product/create.product.dto';
 
 @Controller('product')
 export class ProductController {
@@ -29,7 +29,7 @@ export class ProductController {
   async deleteRemoveProduct(@Param('id', ParseIntPipe) id: number, @Query('force', new DefaultValuePipe(false), new ParseBoolPipe({ optional: true })) force?: boolean) {
     const foundProduct = await this.productRepo.findOne(id);
     if(!foundProduct){
-      throw NotFoundException;
+      throw new NotFoundException(`There is no product with Id ${id}.`);
     }
     await this.productRepo.tryRemoveProduct(foundProduct, force);
     await this.dbService.em.flush();
@@ -49,7 +49,7 @@ export class ProductController {
   async getProduct(@Param('id', ParseIntPipe) id: number) {  //TODO - @Param('id', ProductByIdPipe) product: productEntity
     const foundProduct = await this.productRepo.findOne(id);
     if(!foundProduct){
-      throw NotFoundException;
+      throw new NotFoundException(`There is no product with Id ${id}.`);
     }
     return GetProductDTO.from(foundProduct);
   }

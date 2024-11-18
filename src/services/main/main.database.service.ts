@@ -3,7 +3,7 @@ import { Options, MySqlDriver, MikroORM, EntityManager, RequestContext } from '@
 import { TsMorphMetadataProvider } from '@mikro-orm/reflection';
 import { Migrator } from '@mikro-orm/migrations';
 
-import { ConfigService } from 'src/services/main/main.config.service';
+import { ConfigService } from '../../services/main/main.config.service';
 import { NextFunction } from 'express';
 
 @Injectable()
@@ -26,14 +26,14 @@ export class DBService implements BeforeApplicationShutdown {
       password: this.configService.props.DB_PW,
       charset: 'utf8mb4',
       
-      entities: ['./dist/entities/*.entity.js'],
-      entitiesTs: ['src/entities/*.entity.ts'],
+      entities: ['./dist/**/*.entity.js'],
+      entitiesTs: ['./src/**/*.entity.ts'],
 
       extensions: [Migrator],
       migrations: {
         tableName: 'orm_migrations',
-        path: 'dist/migrations',
-        pathTs: 'src/migrations',
+        path: './dist/migrations',
+        pathTs: './src/migrations',
       },
 
       // we will use the ts-morph reflection, an alternative to the default reflect-metadata provider

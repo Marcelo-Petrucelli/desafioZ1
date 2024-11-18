@@ -1,12 +1,12 @@
 import { BadRequestException, Body, Controller, DefaultValuePipe, Delete, ForbiddenException, Get, HttpCode, HttpStatus, NotAcceptableException, ParseBoolPipe, Post, Query, Req, UnprocessableEntityException, UseGuards, ValidationPipe } from '@nestjs/common';
-import { JwtAuthGuard } from 'src/guards/auth/auth.jwtAuth.guard';
-import { DBService } from 'src/services/main/main.database.service';
-import { User } from 'src/entities/user.entity';
-import { Cart } from 'src/entities/cart.entity';
-import { CartRepository } from 'src/entities/cart.repository';
-import { GetCartDTO } from 'src/dtos/cart/get.cart.dto';
-import { AlterCartDTO } from 'src/dtos/cart/alter.cart.dto';
-import { CreateCartDTO } from 'src/dtos/cart/create.cart.dto';
+import { JwtAuthGuard } from '../../guards/auth/auth.jwtAuth.guard';
+import { DBService } from '../../services/main/main.database.service';
+import { User } from '../../entities/user.entity';
+import { Cart } from '../../entities/cart.entity';
+import { CartRepository } from '../../entities/cart.repository';
+import { GetCartDTO } from '../../dtos/cart/get.cart.dto';
+import { AlterCartDTO } from '../../dtos/cart/alter.cart.dto';
+import { CreateCartDTO } from '../../dtos/cart/create.cart.dto';
 import { Request } from 'express';
 import { ref } from '@mikro-orm/core';
 
@@ -24,7 +24,7 @@ export class CartController {
   async postCreateCart(@Req() req : Request, @Body(ValidationPipe) createCartDTO: CreateCartDTO, @Query('force', new DefaultValuePipe(false), new ParseBoolPipe({ optional: true })) force?: boolean) {
     const user = req.user! as User;
     if(!user){
-      throw ForbiddenException;
+      throw new ForbiddenException(`Token not set. Use /auth endpoint beforehand.`);
     }
     const cart = await ref(user.cart)?.load();
     if(!force && cart){
@@ -47,7 +47,7 @@ export class CartController {
   async postAddProductToCart(@Req() req : Request, @Body(ValidationPipe) alterCartDTO: AlterCartDTO) {
     const user = req.user! as User;
     if(!user){
-      throw ForbiddenException;
+      throw new ForbiddenException(`Token not set. Use /auth endpoint beforehand.`);
     }
 
     if(alterCartDTO.id){
@@ -80,7 +80,7 @@ export class CartController {
   async postRemoveProductFromCart(@Req() req : Request, @Body(ValidationPipe) alterCartDTO: AlterCartDTO) {
     const user = req.user! as User;
     if(!user){
-      throw ForbiddenException;
+      throw new ForbiddenException(`Token not set. Use /auth endpoint beforehand.`);
     }
 
     if(alterCartDTO.id){
@@ -106,7 +106,7 @@ export class CartController {
   async getCart(@Req() req : Request) {
     const user = req.user! as User;
     if(!user){
-      throw ForbiddenException;
+      throw new ForbiddenException(`Token not set. Use /auth endpoint beforehand.`);
     }
     const cart = await ref(user.cart)?.load();
     if(!cart){

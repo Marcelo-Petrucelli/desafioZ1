@@ -1,7 +1,7 @@
-import { StaticImplements, BaseStaticDTO } from 'src/dtos/base.dto';
+import { StaticImplements, BaseStaticDTO } from '../../dtos/base.dto';
+import { GetProductDTO } from '../../dtos/product/get.product.dto';
+import { OrderItem } from '../../entities/orderItem.entity';
 import { IsNumber, IsOptional, ValidateNested } from 'class-validator';
-import { GetProductDTO } from 'src/dtos/product/get.product.dto';
-import { OrderItem } from 'src/entities/orderItem.entity';
 import { Type } from 'class-transformer';
 
 @StaticImplements<BaseStaticDTO>()

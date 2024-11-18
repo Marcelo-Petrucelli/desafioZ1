@@ -1,11 +1,11 @@
 import { EntityRepository } from '@mikro-orm/mysql';
 import { BadRequestException, InternalServerErrorException } from '@nestjs/common';
-import { Order } from 'src/entities/order.entity';
-import { Cart } from 'src/entities/cart.entity';
-import { CartItem } from 'src/entities/cartItem.entity';
-import { OrderItem } from 'src/entities/orderItem.entity';
-import { OrderItemRepository } from 'src/entities/orderItem.repository';
-import { PlaceOrderDTO } from 'src/dtos/order/place.order.dto';
+import { Order } from '../entities/order.entity';
+import { Cart } from '../entities/cart.entity';
+import { CartItem } from '../entities/cartItem.entity';
+import { OrderItem } from '../entities/orderItem.entity';
+import { OrderItemRepository } from '../entities/orderItem.repository';
+import { PlaceOrderDTO } from '../dtos/order/place.order.dto';
 
 export class OrderRepository extends EntityRepository<Order> {
     

@@ -1,5 +1,5 @@
 import { Controller, DefaultValuePipe, Get, ParseBoolPipe, Query, Req } from '@nestjs/common';
-import { DBService } from 'src/services/main/main.database.service';
+import { DBService } from '../services/main/main.database.service';
 
 @Controller()
 export class MainController {

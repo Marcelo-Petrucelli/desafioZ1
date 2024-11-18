@@ -1,6 +1,6 @@
-import { StaticImplements, BaseStaticDTO } from 'src/dtos/base.dto';
+import { StaticImplements, BaseStaticDTO } from '../../dtos/base.dto';
+import { PaymentMethod } from '../../entities/order.entity';
 import { IsEnum } from 'class-validator';
-import { PaymentMethod } from 'src/entities/order.entity';
 
 @StaticImplements<BaseStaticDTO>()
 export class PlaceOrderDTO {

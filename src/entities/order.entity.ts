@@ -1,6 +1,6 @@
 import { Collection, Entity, EntityRepositoryType, Enum, ManyToMany, OneToMany, OptionalProps, PrimaryKey, Property, types } from '@mikro-orm/core';
-import { OrderRepository } from 'src/entities/order.repository';
-import { OrderItem } from 'src/entities/orderItem.entity';
+import { OrderRepository } from '../entities/order.repository';
+import { OrderItem } from '../entities/orderItem.entity';
 
 @Entity({ repository: () => OrderRepository })
 export class Order {

@@ -1,7 +1,7 @@
 import { Global, Module } from '@nestjs/common';
-import { DBService } from 'src/services/main/main.database.service';
-import { ConfigService } from 'src/services/main/main.config.service';
-import { ConfigModule } from 'src/modules/config.module';
+import { DBService } from '../services/main/main.database.service';
+import { ConfigService } from '../services/main/main.config.service';
+import { ConfigModule } from '../modules/config.module';
 
 const databaseServiceProvider = {
   provide: DBService,

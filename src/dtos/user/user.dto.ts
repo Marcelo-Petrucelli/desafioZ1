@@ -1,8 +1,8 @@
-import { StaticImplements, BaseStaticDTO } from 'src/dtos/base.dto';
+import { StaticImplements, BaseStaticDTO } from '../../dtos/base.dto';
+import { GetCartDTO } from '../../dtos/cart/get.cart.dto';
+import { GetAddressDTO } from '../../dtos/address/get.address.dto';
 import { IsNumber, IsOptional, IsString, ValidateNested } from 'class-validator';
 import { Type } from 'class-transformer';
-import { GetCartDTO } from 'src/dtos/cart/get.cart.dto';
-import { GetAddressDTO } from 'src/dtos/address/get.address.dto';
 
 @StaticImplements<BaseStaticDTO>()
 export class UserDTO {

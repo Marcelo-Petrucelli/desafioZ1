@@ -1,7 +1,7 @@
 import { EntityRepository } from '@mikro-orm/mysql';
-import { User } from 'src/entities/user.entity';
-import { Address } from 'src/entities/address.entity';
-import { GetAddressDTO } from 'src/dtos/address/get.address.dto';
+import { User } from '../entities/user.entity';
+import { Address } from '../entities/address.entity';
+import { GetAddressDTO } from '../dtos/address/get.address.dto';
 
 export class AddressRepository extends EntityRepository<Address> {
 

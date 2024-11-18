@@ -1,7 +1,7 @@
 import { EntityRepository } from '@mikro-orm/mysql';
 import { NotAcceptableException } from '@nestjs/common';
-import { Product } from 'src/entities/product.entity';
-import { CreateProductDTO } from 'src/dtos/product/create.product.dto';
+import { Product } from '../entities/product.entity';
+import { CreateProductDTO } from '../dtos/product/create.product.dto';
 
 export class ProductRepository extends EntityRepository<Product> {
   async createProductFromDTO(createProductDTO: CreateProductDTO){

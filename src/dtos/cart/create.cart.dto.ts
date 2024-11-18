@@ -1,6 +1,6 @@
-import { StaticImplements, BaseStaticDTO } from 'src/dtos/base.dto';
+import { StaticImplements, BaseStaticDTO } from '../../dtos/base.dto';
+import { Cart } from '../../entities/cart.entity';
 import { IsNumber, IsOptional } from 'class-validator';
-import { Cart } from 'src/entities/cart.entity';
 
 @StaticImplements<BaseStaticDTO>()
 export class CreateCartDTO {

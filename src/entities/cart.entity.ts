@@ -1,7 +1,7 @@
 import { Collection, Entity, EntityRepositoryType, OneToMany, OneToOne, OptionalProps, PrimaryKey, Property } from '@mikro-orm/core';
-import { CartRepository } from 'src/entities/cart.repository';
-import { CartItem } from 'src/entities/cartItem.entity';
-import { User } from 'src/entities/user.entity';
+import { CartRepository } from '../entities/cart.repository';
+import { CartItem } from '../entities/cartItem.entity';
+import { User } from '../entities/user.entity';
 
 @Entity({ repository: () => CartRepository })
 export class Cart {

@@ -1,6 +1,6 @@
 import { Entity, EntityRepositoryType, ManyToOne, PrimaryKey, Property } from '@mikro-orm/core';
-import { AddressRepository } from 'src/entities/address.repository';
-import { User } from 'src/entities/user.entity';
+import { AddressRepository } from '../entities/address.repository';
+import { User } from '../entities/user.entity';
 
 @Entity({ repository: () => AddressRepository })
 export class Address {

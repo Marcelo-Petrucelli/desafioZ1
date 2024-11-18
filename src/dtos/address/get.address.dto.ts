@@ -1,6 +1,6 @@
-import { StaticImplements, BaseStaticDTO } from 'src/dtos/base.dto';
+import { StaticImplements, BaseStaticDTO } from '../../dtos/base.dto';
 import { IsAlpha, IsNumber, IsNumberString, IsOptional, IsString, MinLength } from 'class-validator';
-import { Address } from 'src/entities/address.entity';
+import { Address } from '../../entities/address.entity';
 
 @StaticImplements<BaseStaticDTO>()
 export class GetAddressDTO {

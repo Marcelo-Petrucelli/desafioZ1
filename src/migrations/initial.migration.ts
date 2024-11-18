@@ -1,7 +1,7 @@
 import { Migration } from '@mikro-orm/migrations';
-import { User } from 'src/entities/user.entity';
-import { Address } from 'src/entities/address.entity';
-import { Product } from 'src/entities/product.entity';
+import { User } from '../entities/user.entity';
+import { Address } from '../entities/address.entity';
+import { Product } from '../entities/product.entity';
 
 import * as bcrypt from 'bcrypt';
 

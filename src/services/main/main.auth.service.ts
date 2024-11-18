@@ -1,10 +1,10 @@
 import { Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
-import { DBService } from 'src/services/main/main.database.service';
-import { JWTPayloadDTO } from 'src/dtos/auth.jwtpayload.dto';
-import { ConfigService } from 'src/services/main/main.config.service';
-import { Session } from 'src/entities/session.entity';
-import { User } from 'src/entities/user.entity';
+import { DBService } from '../../services/main/main.database.service';
+import { JWTPayloadDTO } from '../../dtos/auth.jwtpayload.dto';
+import { ConfigService } from '../../services/main/main.config.service';
+import { Session } from '../../entities/session.entity';
+import { User } from '../../entities/user.entity';
 import { ref } from '@mikro-orm/core';
 import * as bcrypt from 'bcrypt';
 

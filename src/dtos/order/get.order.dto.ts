@@ -1,7 +1,7 @@
-import { StaticImplements, BaseStaticDTO } from 'src/dtos/base.dto';
+import { StaticImplements, BaseStaticDTO } from '../../dtos/base.dto';
+import { GetOrderItemDTO } from '../../dtos/order/get.orderItem.dto';
+import { Order, PaymentMethod } from '../../entities/order.entity';
 import { IsEnum, IsNumber, IsOptional, ValidateNested } from 'class-validator';
-import { GetOrderItemDTO } from 'src/dtos/order/get.orderItem.dto';
-import { Order, PaymentMethod } from 'src/entities/order.entity';
 import { Type } from 'class-transformer';
 
 @StaticImplements<BaseStaticDTO>()
