@@ -1,11 +1,11 @@
 import { EntityRepository } from '@mikro-orm/mysql';
 import { User } from 'src/entities/user.entity';
 import { Address } from 'src/entities/address.entity';
-import { AddressDTO } from 'src/dtos/address/address.dto';
+import { GetAddressDTO } from 'src/dtos/address/get.address.dto';
 
 export class AddressRepository extends EntityRepository<Address> {
 
-	async createAddressFromDTO(user: User, addressDTO: AddressDTO){   
+	async createAddressFromDTO(user: User, addressDTO: GetAddressDTO){   
 		const createdAddress = this.create({ //Send this to the Entity, as some static 'to' method
 				owner: user,
 				cep: addressDTO.cep,

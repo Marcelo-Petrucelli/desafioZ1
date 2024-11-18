@@ -1,7 +1,7 @@
 import { Collection, Entity, EntityRepositoryType, ManyToMany, OneToMany, OptionalProps, PrimaryKey, Property, types } from '@mikro-orm/core';
 import { ProductRepository } from 'src/entities/product.repository';
 import { CartItem } from 'src/entities/cartItem.entity';
-import { Order } from 'src/entities/order.entity';
+import { OrderItem } from 'src/entities/orderItem.entity';
 
 @Entity({ repository: () => ProductRepository })
 export class Product {
@@ -27,7 +27,7 @@ export class Product {
   @Property({ type: types.float })
   sellingPrice!: number;
 
-  @Property()
+  @Property({ unsigned: true })
   stock!: number;
 
   /*@Property()       //TODO - Implement service to read image, save it locally and set imgURL
@@ -39,6 +39,6 @@ export class Product {
   @OneToMany({ mappedBy: 'product', orphanRemoval: true })
   cartItems = new Collection<CartItem>(this);
 
-  @ManyToMany()
-  orders = new Collection<Order>(this);
+  @OneToMany({ mappedBy: 'product' })
+  orderItems = new Collection<OrderItem>(this);
 }

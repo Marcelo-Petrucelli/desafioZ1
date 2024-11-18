@@ -25,7 +25,7 @@ export class CreateCartDTO {
     const ret = new CreateCartDTO();
     ret.id = theCart.id;
     ret.discount = theCart.discount;
-    ret.productIds = theCart.cartItem.map((item) => { return item.product.id; });
+    ret.productIds = theCart.cartItems.map((cartItem) => { return cartItem.product.id; });
     ret.ownerId = theCart.owner.id;
 
     return ret;

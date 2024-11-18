@@ -18,8 +18,8 @@ export class ProductRepository extends EntityRepository<Product> {
   }
 
   async tryRemoveProduct(product: Product, force?: boolean){
-    const inOrders = await product.orders.load();
-    if(inOrders.length > 0){
+    const inOrdersItems = await product.orderItems.load();
+    if(inOrdersItems.length > 0){ //Can't force over Orders, since we can't remove users' already placed order.
       throw new NotAcceptableException(`The product with Id ${product.id} exists inside an Order and can't be removed.`);
     }
 

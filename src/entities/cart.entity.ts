@@ -13,9 +13,9 @@ export class Cart {
   id!: number;
 
   @OneToMany({ mappedBy: 'cart', orphanRemoval: true })
-  cartItem = new Collection<CartItem>(this);
+  cartItems = new Collection<CartItem>(this);
 
-  @Property()
+  @Property({ unsigned: true })
   discount!: number;
 
   @Property()

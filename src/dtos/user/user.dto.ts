@@ -2,7 +2,7 @@ import { StaticImplements, BaseStaticDTO } from 'src/dtos/base.dto';
 import { IsNumber, IsOptional, IsString, ValidateNested } from 'class-validator';
 import { Type } from 'class-transformer';
 import { GetCartDTO } from 'src/dtos/cart/get.cart.dto';
-import { AddressDTO } from 'src/dtos/address/address.dto';
+import { GetAddressDTO } from 'src/dtos/address/get.address.dto';
 
 @StaticImplements<BaseStaticDTO>()
 export class UserDTO {
@@ -21,8 +21,8 @@ export class UserDTO {
 
   @IsOptional()
   @ValidateNested({ each: true })
-  @Type(() => AddressDTO)
-  addresses?: AddressDTO[];
+  @Type(() => GetAddressDTO)
+  addresses?: GetAddressDTO[];
 
   @IsOptional()
   @ValidateNested()

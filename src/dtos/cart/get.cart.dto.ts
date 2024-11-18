@@ -14,7 +14,7 @@ export class GetCartDTO {
   @IsNumber()
   discount!: number;
 
-  @ValidateNested({ each: true }) //Listing case, we return the whole ProductDTO
+  @ValidateNested({ each: true }) //Listing case, we return the whole GetProductDTO
   @Type(() => GetCartItemDTO)
   products!: GetCartItemDTO[];
 
@@ -27,7 +27,7 @@ export class GetCartDTO {
     const ret = new GetCartDTO();
     ret.id = theCart.id;
     ret.discount = theCart.discount;
-    ret.products = theCart.cartItem.map((cartItem) => { return GetCartItemDTO.from(cartItem); });
+    ret.products = theCart.cartItems.map((cartItem) => { return GetCartItemDTO.from(cartItem); });
     ret.ownerId = theCart.owner.id;
 
     return ret;

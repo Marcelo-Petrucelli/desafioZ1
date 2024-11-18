@@ -32,7 +32,7 @@ export class CartController {
     }
 
     if(cart){
-      cart.cartItem.removeAll(); //CartItem is marked with orphanRemoval, setting to null removes orphans
+      cart.cartItems.removeAll(); //CartItem is marked with orphanRemoval, setting to null removes orphans
       await this.dbService.em.persistAndFlush(cart);
       this.dbService.em.remove(cart);
     }
@@ -100,12 +100,6 @@ export class CartController {
     await this.dbService.em.flush();    
   }
 
-  @Post('placeOrder')
-  @HttpCode(HttpStatus.CREATED)
-  @UseGuards(JwtAuthGuard)
-  async postPlaceOrder() {
-  }
-
   @Get()
   @HttpCode(HttpStatus.OK)
   @UseGuards(JwtAuthGuard)
@@ -118,7 +112,7 @@ export class CartController {
     if(!cart){
       throw new UnprocessableEntityException("This user doesn't have a cart.");
     }
-    await cart.cartItem.load(); //We need to ensure cart.cartItem is initialized before processing it
+    await cart.cartItems.load(); //We need to ensure cart.cartItem is initialized before processing it
     return GetCartDTO.from(cart);
   }
 

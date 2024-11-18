@@ -22,7 +22,7 @@ export class AlterCartDTO {
     const ret = new AlterCartDTO();
     ret.id = theCart.id;
     ret.discount = theCart.discount;
-    ret.productIds = theCart.cartItem.map((item) => { return item.product.id; });
+    ret.productIds = theCart.cartItems.map((cartItem) => { return cartItem.product.id; });
 
     return ret;
   }

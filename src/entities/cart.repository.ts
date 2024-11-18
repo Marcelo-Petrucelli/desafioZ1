@@ -36,11 +36,14 @@ export class CartRepository extends EntityRepository<Cart> {
     const setProductIdList = new Set(alterCartDTO.productIds);
     const products = await productRepo.find(Array.from(setProductIdList));
     
-    await cart.cartItem.load();
+    await cart.cartItems.load();
     for(const productId of alterCartDTO.productIds){
-      const existCartItem = cart.cartItem.find((cartItem) => { return cartItem.product.id == productId; });
+      const existCartItem = cart.cartItems.find((cartItem) => { return cartItem.product.id == productId; });
       if(existCartItem){
         existCartItem.quantity++;
+        if(existCartItem.product.stock <  existCartItem.quantity){
+          throw new BadRequestException(`Product with id ${productId} doesn't have enough stock to add to cart. Current stock is ${existCartItem.product.stock}, trying to add ${existCartItem.quantity} of this product.`);
+        }
         this.em.persist(existCartItem);
       } else {
         const prod = products.find((prod) => { return prod.id == productId; });
@@ -52,7 +55,7 @@ export class CartRepository extends EntityRepository<Cart> {
           product: prod,
           quantity: 1
         });
-        cart.cartItem.add(newCartItem);
+        cart.cartItems.add(newCartItem);
         this.em.persist(newCartItem);
       }
     }
@@ -60,21 +63,25 @@ export class CartRepository extends EntityRepository<Cart> {
   }
 
   async removeProductIdsFromCart(cart: Cart, alterCartDTO: AlterCartDTO){
-    await cart.cartItem.load();
+    await cart.cartItems.load();
     for(const productId of alterCartDTO.productIds){
-      const existCartItem = cart.cartItem.find((cartItem) => { return cartItem.product.id == productId; });
+      const existCartItem = cart.cartItems.find((cartItem) => { return cartItem.product.id == productId; });
       if(!existCartItem){
         throw new BadRequestException(`ProductId ${productId} is not present in the user's Cart.`);
       }
 
       if(existCartItem.quantity - 1 <= 0){ //If we're removing the last item from CartItem
-        cart.cartItem.remove(existCartItem);
+        cart.cartItems.remove(existCartItem);
       } else {
         existCartItem.quantity--;
       }
       this.em.persist(existCartItem);
     }
-    this.em.persist(cart);
+    if(cart.cartItems.length <= 0){
+      this.em.remove(cart);
+    } else {
+      this.em.persist(cart);
+    }
   }
 
 }

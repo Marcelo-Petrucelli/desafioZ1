@@ -5,7 +5,7 @@ import { User } from 'src/entities/user.entity';
 import { Address } from 'src/entities/address.entity';
 import { UserRepository } from 'src/entities/user.repository';
 import { AddressRepository } from 'src/entities/address.repository';
-import { AddressDTO } from 'src/dtos/address/address.dto';
+import { GetAddressDTO } from 'src/dtos/address/get.address.dto';
 
 @Controller('address')
 export class AddressController {
@@ -20,7 +20,7 @@ export class AddressController {
   @Post('create')
   @HttpCode(HttpStatus.CREATED)
   @UseGuards(JwtAuthGuard)
-  async postCreateAddress(@Body(ValidationPipe) addressDTO: AddressDTO) {
+  async postCreateAddress(@Body(ValidationPipe) addressDTO: GetAddressDTO) {
     const foundUser = await this.userRepo.findOne(addressDTO.ownerId);
     if(!foundUser){
       throw new NotFoundException('OwnerId could not be found!');
@@ -45,7 +45,7 @@ export class AddressController {
   @UseGuards(JwtAuthGuard)
   async getListAddresses(@Query('limit', new DefaultValuePipe(-1), new ParseIntPipe({ optional: true })) limit?: number) {
     const queried = limit === -1 ? await this.addressRepo.findAll() : await this.addressRepo.findAll({ limit: limit });
-    return queried.map((address) => { return AddressDTO.from(address);});
+    return queried.map((address) => { return GetAddressDTO.from(address);});
   }
 
   @Get(':id')
@@ -56,7 +56,7 @@ export class AddressController {
     if(!foundAddress){
       throw new NotFoundException('Address could not be found!');
     }
-    return AddressDTO.from(foundAddress);
+    return GetAddressDTO.from(foundAddress);
   }
 
 }

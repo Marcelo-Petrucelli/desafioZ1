@@ -1,17 +1,21 @@
-import { Collection, Entity, EntityRepositoryType, Enum, ManyToMany, PrimaryKey, Property } from '@mikro-orm/core';
+import { Collection, Entity, EntityRepositoryType, Enum, ManyToMany, OneToMany, OptionalProps, PrimaryKey, Property, types } from '@mikro-orm/core';
 import { OrderRepository } from 'src/entities/order.repository';
-import { Product } from 'src/entities/product.entity';
+import { OrderItem } from 'src/entities/orderItem.entity';
 
 @Entity({ repository: () => OrderRepository })
 export class Order {
 
   [EntityRepositoryType]?: OrderRepository;
+  [OptionalProps]?: 'createdAt';
 
   @PrimaryKey()
   id!: number;
 
-  @ManyToMany({ mappedBy: 'orders' })
-  products = new Collection<Product>(this);
+  @Property({ type: types.float })
+  total!: number;
+
+  @OneToMany({ mappedBy: 'order', orphanRemoval: true })
+  orderItems = new Collection<OrderItem>(this);
 
   @Enum(() => PaymentMethod)
   paymentMethod!: PaymentMethod;

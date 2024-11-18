@@ -303,6 +303,118 @@ Aqui o ```id``` é opicional. Se não for informado o carrinho é removido do us
 ```
 #### Retorno esperado - ```202 - ACCEPTED```
 
+## > Order
+
+### ```Order Get - GET - /:id```
+#### Retorno esperado - ```200 - OK```
+```json
+{
+	"id": 1,
+	"total": 47.8,
+	"paymentMethod": "pix",
+	"products": [
+		{
+			"id": 1,
+			"product": {
+				"id": 1,
+				"name": "Produto1",
+				"description": "Descrição do Produto 1",
+				"weight": 10.2,
+				"sellingPrice": 21
+			},
+			"quantity": 2
+		},
+		{
+			"id": 2,
+			"product": {
+				"id": 2,
+				"name": "Produto2",
+				"description": "Descrição do Produto 2",
+				"weight": 1.6,
+				"sellingPrice": 5.8
+			},
+			"quantity": 1
+		}
+	]
+}
+```
+
+----
+### ```Order List - GET - /list```
+#### Retorno esperado - ```200 - OK```
+```json
+[
+	{
+		"id": 1,
+		"total": 47.8,
+		"paymentMethod": "pix",
+		"products": [
+			{
+				"id": 1,
+				"product": {
+					"id": 1,
+					"name": "Produto1",
+					"description": "Descrição do Produto 1",
+					"weight": 10.2,
+					"sellingPrice": 21
+				},
+				"quantity": 2
+			},
+			{
+				"id": 2,
+				"product": {
+					"id": 2,
+					"name": "Produto2",
+					"description": "Descrição do Produto 2",
+					"weight": 1.6,
+					"sellingPrice": 5.8
+				},
+				"quantity": 1
+			}
+		]
+	},
+	{
+		"id": 2,
+		"total": 46.4,
+		"paymentMethod": "pix",
+		"products": [
+			{
+				"id": 3,
+				"product": {
+					"id": 3,
+					"name": "Produto3",
+					"description": "Descrição do Produto 3",
+					"weight": 3.2,
+					"sellingPrice": 20.3
+				},
+				"quantity": 2
+			},
+			{
+				"id": 4,
+				"product": {
+					"id": 2,
+					"name": "Produto2",
+					"description": "Descrição do Produto 2",
+					"weight": 1.6,
+					"sellingPrice": 5.8
+				},
+				"quantity": 1
+			}
+		]
+	}
+]
+```
+
+----
+### ```Order Place - POST - /place```
+#### Corpo esperado
+```json
+{
+	"paymentMethod": "pix"
+}
+```
+#### Retorno esperado - ```201 - CREATED```
+
 ## License
 
 Nest, and this whole project are [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).

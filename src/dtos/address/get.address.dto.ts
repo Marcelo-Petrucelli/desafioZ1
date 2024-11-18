@@ -3,7 +3,7 @@ import { IsAlpha, IsNumber, IsNumberString, IsOptional, IsString, MinLength } fr
 import { Address } from 'src/entities/address.entity';
 
 @StaticImplements<BaseStaticDTO>()
-export class AddressDTO {
+export class GetAddressDTO {
 
   @IsNumber()
   @IsOptional()
@@ -33,10 +33,10 @@ export class AddressDTO {
   @IsNumber()
   ownerId!: number;
 
-  public static from(address: any) : AddressDTO {
+  public static from(address: any) : GetAddressDTO {
       const theAddress = address as Address;
 
-      const ret = new AddressDTO();
+      const ret = new GetAddressDTO();
       ret.id = theAddress.id;
       ret.cep = theAddress.cep;
       ret.ownerId = theAddress.owner.id;

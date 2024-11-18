@@ -10,6 +10,7 @@ import { AuthController } from 'src/controllers/auth/auth.controller';
 import { AddressController } from 'src/controllers/address/address.controller';
 import { ProductController } from 'src/controllers/products/products.controller';
 import { CartController } from 'src/controllers/cart/cart.controller';
+import { OrderController } from 'src/controllers/order/order.controller';
 
 @Module({
   imports: [
@@ -18,7 +19,7 @@ import { CartController } from 'src/controllers/cart/cart.controller';
     DatabaseModule,
     AuthModule
   ],
-  controllers: [MainController, AuthController/*, UserController*/, AddressController, ProductController, CartController],
+  controllers: [MainController, AuthController/*, UserController*/, AddressController, ProductController, CartController, OrderController],
 })
 
 export class MainModule {};

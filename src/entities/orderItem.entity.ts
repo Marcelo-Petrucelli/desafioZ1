@@ -1,13 +1,13 @@
 import { Entity, EntityRepositoryType, ManyToOne, PrimaryKey, Property } from '@mikro-orm/core';
-import { CartItemRepository } from 'src/entities/cartItem.repository';
+import { OrderItemRepository } from 'src/entities/orderItem.repository';
 import { Product } from 'src/entities/product.entity';
-import { Cart } from 'src/entities/cart.entity';
+import { Order } from 'src/entities/order.entity';
 
 //If there are no additional information fields, this entity may be swapped simply by a ManyToMany between Product and Cart
-@Entity({ repository: () => CartItemRepository })
-export class CartItem {
+@Entity({ repository: () => OrderItemRepository })
+export class OrderItem {
 
-  [EntityRepositoryType]?: CartItemRepository;
+  [EntityRepositoryType]?: OrderItemRepository;
 
   @PrimaryKey()
   id!: number;
@@ -16,7 +16,7 @@ export class CartItem {
   product!: Product;
 
   @ManyToOne()
-  cart!: Cart;
+  order!: Order;
 
   @Property({ unsigned: true })
   quantity!: number;
