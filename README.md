@@ -52,9 +52,9 @@ $ npm run test:cov
 
 O projeto está propositalmente organizado entre pastas por funcionalidade e, seus arquivos internos, com nomes representando sua hierarquia interna.
 
-Em alguns casos, como entidades e DTOs (Data Transfer Objects), a criação de pastas não foi feita já que multiplas entidades são utilizadas em multiplas funcionalidades.
+Em alguns casos, como entidades, a criação de pastas não foi feita já que multiplas entidades são utilizadas em multiplas funcionalidades (mas não haveriam problemas em separá-las por pastas também).
 
-Em outros casos, situações como controladoras, casos como ```controllers/auth/auth.controller.ts``` acaba ocorrendo e, apesar de parecerem redundates, evitam colisões de nomes nos arquivos, caso sejam referenciados diretamente ou através de caminhos relativos.
+Em outros casos, situações como controladoras e DTOs (Data Transfer Objects), casos como ```controllers/auth/auth.controller.ts``` acabam ocorrendo e, apesar de parecerem redundates, evitam colisões de nomes nos arquivos, caso sejam referenciados diretamente ou através de caminhos relativos.
 
 ## Recursos e Funcionalidades
 
