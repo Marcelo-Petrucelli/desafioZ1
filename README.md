@@ -56,6 +56,8 @@ Em alguns casos, como entidades, a criação de pastas não foi feita já que mu
 
 Em outros casos, situações como controladoras e DTOs (Data Transfer Objects), casos como ```controllers/auth/auth.controller.ts``` acabam ocorrendo e, apesar de parecerem redundates, evitam colisões de nomes nos arquivos, caso sejam referenciados diretamente ou através de caminhos relativos.
 
+Também é possível importar um Postman(v2) para realizar testes nos endpoints e uma cópia da documentação abaixo no arquivo ```desafioZ1_Marcelo.postman_collection.json```
+
 ## Recursos e Funcionalidades
 
 ## > Auth
@@ -67,83 +69,6 @@ Esta é a única rota que não requer um JWT no header "Authorization: Bearer TO
 	"access_token": "TOKEN"
 }
 ```
-
-## > Product
-
-### ```Product Get - GET - /:id```
-#### Retorno esperado - ```200 - OK```
-```json
-{
-	"id": 2,
-	"name": "Produto2",
-	"description": "Descrição do Produto 2",
-	"weight": 1.6,
-	"sellingPrice": 5.8
-}
-```
-
-----
-### ```Product List - GET - /list```
-#### Retorno esperado - ```200 - OK```
-```json
-[
-	{
-		"id": 1,
-		"name": "Produto1",
-		"description": "Descrição do Produto 1",
-		"weight": 10.2,
-		"buyingPrice": 10.5,
-		"sellingPrice": 21,
-		"stock": 10
-	},
-	{
-		"id": 2,
-		"name": "Produto2",
-		"description": "Descrição do Produto 2",
-		"weight": 1.6,
-		"buyingPrice": 5.5,
-		"sellingPrice": 5.8,
-		"stock": 20
-	},
-	{
-		"id": 3,
-		"name": "Produto3",
-		"description": "Descrição do Produto 3",
-		"weight": 3.2,
-		"buyingPrice": 2.5,
-		"sellingPrice": 20.3,
-		"stock": 15
-	},
-	{
-		"id": 4,
-		"name": "Produto4",
-		"description": "Descrição do Produto 4",
-		"weight": 7.5,
-		"buyingPrice": 0.5,
-		"sellingPrice": 0.2,
-		"stock": 0
-	}
-]
-```
-
-----
-### ```Product Create - POST - /create```
-#### Corpo esperado
-```json
-{
-	"name": "Produto5",
-	"description": "Descrição do Produto 5",
-	"weight": 12.5,
-	"buyingPrice": 1.5,
-	"sellingPrice": 0.75,
-	"stock": 12
-}
-```
-#### Retorno esperado - ```201 - CREATED```
-
-----
-### ```Product Remove - DELETE - /remove/:id?force=false```
-#### Retorno esperado - ```202 - ACCEPTED```
 
 ## > Address
 
@@ -228,6 +153,83 @@ Esta é a única rota que não requer um JWT no header "Authorization: Bearer TO
 
 ----
 ### ```Address Remove - DELETE - /remove/:id```
+#### Retorno esperado - ```202 - ACCEPTED```
+
+## > Product
+
+### ```Product Get - GET - /:id```
+#### Retorno esperado - ```200 - OK```
+```json
+{
+	"id": 2,
+	"name": "Produto2",
+	"description": "Descrição do Produto 2",
+	"weight": 1.6,
+	"sellingPrice": 5.8
+}
+```
+
+----
+### ```Product List - GET - /list```
+#### Retorno esperado - ```200 - OK```
+```json
+[
+	{
+		"id": 1,
+		"name": "Produto1",
+		"description": "Descrição do Produto 1",
+		"weight": 10.2,
+		"buyingPrice": 10.5,
+		"sellingPrice": 21,
+		"stock": 10
+	},
+	{
+		"id": 2,
+		"name": "Produto2",
+		"description": "Descrição do Produto 2",
+		"weight": 1.6,
+		"buyingPrice": 5.5,
+		"sellingPrice": 5.8,
+		"stock": 20
+	},
+	{
+		"id": 3,
+		"name": "Produto3",
+		"description": "Descrição do Produto 3",
+		"weight": 3.2,
+		"buyingPrice": 2.5,
+		"sellingPrice": 20.3,
+		"stock": 15
+	},
+	{
+		"id": 4,
+		"name": "Produto4",
+		"description": "Descrição do Produto 4",
+		"weight": 7.5,
+		"buyingPrice": 0.5,
+		"sellingPrice": 0.2,
+		"stock": 0
+	}
+]
+```
+
+----
+### ```Product Create - POST - /create```
+#### Corpo esperado
+```json
+{
+	"name": "Produto5",
+	"description": "Descrição do Produto 5",
+	"weight": 12.5,
+	"buyingPrice": 1.5,
+	"sellingPrice": 0.75,
+	"stock": 12
+}
+```
+#### Retorno esperado - ```201 - CREATED```
+
+----
+### ```Product Remove - DELETE - /remove/:id?force=false```
 #### Retorno esperado - ```202 - ACCEPTED```
 
 ## > Cart
